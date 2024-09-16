@@ -37,16 +37,19 @@
                 {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+            
+                <!-- Create a form for logout that will be triggered by clicking on the Logout link -->
+                <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display: none;">
                     {% csrf_token %}
-                    <button type="submit" class="nav-item nav-link btn btn-link" style="padding: 0; border: none; background: none;">
-                        Logout
-                    </button>
                 </form>
-                {% else %}
+                <a class="nav-item nav-link" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+                    Logout
+                </a>
+            {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                {% endif %}
+            {% endif %}
+            
               </div>
 
             </div>
