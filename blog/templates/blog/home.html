@@ -1,5 +1,9 @@
 {% extends "blog/base.html" %} 
 {% block content %} 
+
+
+<p>Total Posts: {{ post_count }}</p>
+
 {% for post in posts %}
 <article class="media content-section">
   <img
