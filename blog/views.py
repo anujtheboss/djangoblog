@@ -1,36 +1,39 @@
+import os
+import logging
+from .models import Post, Website
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.views.generic import (ListView,
-                                 DetailView,
-                                 CreateView,
-                                 UpdateView,
-                                 DeleteView,
-                                 )
-from .models import Post, Website
+from django.views.generic import  ListView, DetailView, CreateView, UpdateView,DeleteView,View 
 from django.db.models import Q
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
-# def home(request):
-#     q = request.GET.get('q') if request.GET.get('q') else ''
-    
-#     if q:
-#         # Filter posts by title, content, or author_username
-#         posts = Post.objects.filter(
-#             Q(title__icontains=q) | 
-#             Q(content__icontains=q) | 
-#             Q(author__username__icontains=q)
-#         )
-#     else:
-#         # No query, so return all posts
-#         posts = Post.objects.all()
-    
-#     context = {
-#         'posts': posts,
-#         'q': q
-#     }
-    
-#     return render(request, 'blog/home.html', context)
+logger = logging.getLogger(__name__)
 
+@method_decorator(csrf_exempt, name='dispatch')
+class ImageUploadView(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            image_file = request.FILES.get('file')
+            if image_file:
+                image_name = image_file.name
+                media_directory = os.path.join('media', 'images')
+                image_path = os.path.join(media_directory, image_name)
+
+                # Create directory if it doesn't exist
+                os.makedirs(media_directory, exist_ok=True)
+
+                with open(image_path, 'wb+') as destination:
+                    for chunk in image_file.chunks():
+                        destination.write(chunk)
+                
+                return JsonResponse({'location': f'/media/images/{image_name}'})
+            return JsonResponse({'error': 'No file uploaded'}, status=400)
+        except Exception as e:
+            logger.error("Image upload error: %s", str(e))
+            return JsonResponse({'error': 'Image upload failed'}, status=500)
 
 class PostListView(ListView):
     model = Post
