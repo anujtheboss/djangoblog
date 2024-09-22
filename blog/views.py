@@ -7,7 +7,7 @@ from django.views.generic import (ListView,
                                  UpdateView,
                                  DeleteView,
                                  )
-from .models import Post
+from .models import Post, Website
 from django.db.models import Q
 
 # def home(request):
@@ -112,3 +112,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'}) 
+
+
+def website(request):
+    return render(request, 'blog/pageweb.html')

@@ -16,3 +16,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail',kwargs={'pk':self.pk})
 
+class Website(models.Model):
+    web_name = models.CharField(max_length=100)
+    web_url = models.URLField(max_length=300)
+
+    def __str__(self):
+        return self.web_name
