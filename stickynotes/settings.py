@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "tinymce",
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "blog.context_processors.website_list",
             ],
         },
     },
@@ -120,13 +122,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Ensure this points to your static directory
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -152,3 +154,24 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('USER_EMAIL')
 EMAIL_HOST_PASSWORD = os.environ.get('USER_PASS')
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    "menubar": "file edit view insert format tools table help",
+    "plugins": (
+        "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+        "fullscreen insertdatetime media table paste code help wordcount spellchecker"
+    ),
+    "toolbar": (
+        "undo redo | bold italic underline | fontselect fontsizeselect formatselect | alignleft "
+        "aligncenter alignright alignjustify | outdent indent | numlist bullist checklist | forecolor "
+        "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+        "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+        "a11ycheck ltr rtl | showcomments addcomment code"
+    ),
+    "image_advtab": True,  # Enables advanced tab for images
+    "images_upload_url": "/upload_image/",  # URL to your backend view to handle the image upload
+    "automatic_uploads": True,
+    "file_picker_types": "image",
+    "custom_undo_redo_levels": 10,
+}

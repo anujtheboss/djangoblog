@@ -1,0 +1,78 @@
+<style>
+  /* Style the content section */
+  .content-section-website {
+  background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Style the heading */
+.content-section-website h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center; /* Center the heading */
+}
+
+/* Style the paragraph */
+.content-section-website p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center; /* Center the paragraph */
+}
+
+/* Style the unordered list */
+.content-section-website ul {
+    list-style-type: none; /* Remove bullets */
+    padding-left: 0;
+}
+
+/* Style each list item */
+.content-section-website ul li {
+    background-color: #fff; /* White background */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Add hover effect to list items */
+.content-section-website ul li:hover {
+    background-color: #f1f1f1;
+    transform: translateY(-3px);
+}
+
+/* Style the links */
+.content-section-website ul li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Add hover effect to links */
+.content-section-website ul li a:hover {
+    text-decoration: underline;
+}
+
+</style>
+<div class="content-section-website">
+  <h1>Some Useful Sites</h1>
+  <!-- Display total number of websites -->
+  <p>Total Websites: {{ website_count }}</p>
+
+  <!-- Loop through websites and display their details -->
+  <ul>
+      {% for website in websites %}
+      <li>
+          <a href="{{ website.web_url }}" target="_blank">{{ website.web_name }}</a>
+      </li>
+      {% empty %}
+      <li>No websites available yet.</li>
+      {% endfor %}
+  </ul>
+</div>
