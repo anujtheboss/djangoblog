@@ -1,5 +1,5 @@
 test.py
-
+front.html
 /blog/__pycache__
 *.pyc
 db.sqlite3
